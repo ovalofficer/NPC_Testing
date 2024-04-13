@@ -99,10 +99,10 @@ def main():
 
             dude.move(next_x, next_y)
 
-            print(f'{dude.trail}')
+            # print(f'{dude.trail}')
 
         draw_grid(dudes)
-        time.sleep(0.5)
+        time.sleep(0.35)
 
 
 main()
