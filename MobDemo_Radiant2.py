@@ -20,11 +20,11 @@ def get_random_map_point() -> tuple[int, int]:
     return random.randrange(0, AREA_X + 1), random.randrange(0, AREA_Y + 1)
 
 
-def is_in_bounds(x, y) -> bool:
+def is_in_map_bounds(x, y) -> bool:
     return not (x <= 0 or x >= AREA_X or y <= 0 or y >= AREA_Y)
 
 
-def draw_grid(mobs: list[Entity.RadiantMob]) -> None:
+def draw_grid(mobs: list[Entity.RadiantMob], walls: list[Entity.Wall]) -> None:
     # print top coords
     # for i in range(1, AREA_X+1):
     #    print(i, end='')
@@ -47,6 +47,10 @@ def draw_grid(mobs: list[Entity.RadiantMob]) -> None:
                 if mob.desired_x == x and mob.desired_y == y:
                     print("\b" * len(str(mob.index) + ">o"), str(mob.index) + ">o", end='', sep='')
 
+            for wall in walls:
+                if wall.x1 <= x <= wall.x2 and wall.y1 <= y <= wall.y2:
+                    print("\b#", end='')
+
         print(y + 1, end='')
 
 
@@ -55,9 +59,13 @@ def main():
     dude1 = Entity.RadiantMob("Dude1", *get_random_map_point(), *get_random_map_point())
     dudes = [dude0, dude1]
 
+    wall1 = Entity.Wall(20, 5, 25, 8)
+
+    walls = [wall1]
+
     for dude in dudes:
 
-        if not is_in_bounds(dude.x, dude.y):
+        if not is_in_map_bounds(dude.x, dude.y):
             print(f'{dude.name} (INDEX {dude.index}) STARTING POS OUT OF BOUNDS')
             exit(1)
 
@@ -78,7 +86,7 @@ def main():
 
                 move += 1
 
-                draw_grid(dudes)
+                draw_grid(dudes, walls)
                 if SLEEP > 0:
                     time.sleep(SLEEP)
 

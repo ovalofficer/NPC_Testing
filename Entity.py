@@ -35,6 +35,15 @@ class Mob:
         return closest
 
 
+class Wall:
+
+    def __init__(self, x1: int, y1: int, x2: int, y2: int):
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+
+
 class RadiantMob(Mob):
     index = 0
 
@@ -76,6 +85,19 @@ class RadiantMob(Mob):
     def is_at_point(self, x: int, y: int):
         return self.x == x and self.y == y
 
+    # I dont know what to do with is_within yet -- could be static or
+
+    def is_within(self, x: int, y: int, x1: int, y1: int, x2: int, y2: int):
+        return x1 <= x <= x2 and y1 <= y <= y2
+
+    def is_hitting_wall(self, wall: Wall):
+        return self.is_within(self.x, self.y, wall.x1, wall.y1, wall.x2, wall.y2)
+
+
+    # TODO:
+    # Make method to circumvent wall; if x + 1 is wall, check x + 2, if out of bounds, check x - 1, etc.
+
+
     def create_new_path(self, dx: int, dy: int):
         sim_x, sim_y = self.x, self.y
         path = [(sim_x, sim_y)]
@@ -101,3 +123,7 @@ class RadiantMob(Mob):
 
     def update_path(self):
         self.path = self.create_new_path(self.desired_x, self.desired_y)
+
+
+
+
