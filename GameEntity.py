@@ -1,3 +1,6 @@
+import random
+
+
 class Wall:
 
     def __init__(self, x1: int, y1: int, x2: int, y2: int):
@@ -101,5 +104,32 @@ class RadiantMob:
 
         return path
 
+    def create_new_path_random(self, dx: int, dy: int):
+        sim_x, sim_y = self.x, self.y
+        path = [(sim_x, sim_y)]
+
+        while not sim_x == dx or not sim_y == dy:
+
+            if sim_y < dy:
+                sim_y += 1
+            elif sim_y > dy:
+                sim_y -= 1
+            else:
+                pass
+
+            if sim_x < dx:
+                sim_x += 1
+            elif sim_x > dx:
+                sim_x -= 1
+            else:
+                pass
+
+            path.append((sim_x, sim_y))
+
+        return path
+
     def update_path(self):
         self.path = self.create_new_path(self.desired_x, self.desired_y)
+
+    def update_path_random(self):
+        self.path = self.create_new_path_random(self.desired_x, self.desired_y)
