@@ -40,7 +40,7 @@ def draw_grid(mobs: list[Entity.RadiantMob], walls: list[Entity.Wall]) -> None:
                 for coords in mob.trail:
                     if coords[0] == x and coords[1] == y:
                         print(f'\b{GRID_EMPTY_SPACE}', end='')
-                if mob.starting_x == x and mob.starting_y == y:
+                if mob.trail[0][0] == x and mob.trail[0][1] == y:
                     print(f"\b{mob.index}", end='', sep='')
                 if mob.x == x and mob.y == y:
                     print("\b" * len(str(mob.index) + ">x"), str(mob.index) + ">x", end='', sep='')
